@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
+import { useRoute } from '@react-navigation/native';
 import api from '../../services/api';
 import formatValue from '../../utils/formatValue';
 

@@ -84,13 +84,13 @@ const FoodDetails: React.FC = () => {
           quantity: 0,
         }));
 
-        setExtras(extrasData);
         setFood(formattedFood);
+        setExtras(extrasData);
       });
     }
 
     loadFood();
-  }, [routeParams.id]);
+  }, [routeParams]);
 
   function handleIncrementExtra(id: number): void {
     // Increment extra quantity
@@ -148,18 +148,16 @@ const FoodDetails: React.FC = () => {
       return priceExtra;
     });
 
-    if (extraValue !== []) {
+    if (extraValue) {
       const extraTotal = extraValue.reduce((acc, curr) => acc + curr, 0);
-      const total = (food.price + extraTotal) * foodQuantity;
+      const total = food.price * foodQuantity + extraTotal;
       return formatValue(total);
     }
-    const total = food.price * foodQuantity;
-
-    return formatValue(total);
   }, [extras, food, foodQuantity]);
 
   async function handleFinishOrder(): Promise<void> {
-    // Finish the order and save on the API
+    api.post('orders', food);
+    navigation.navigate('Orders');
   }
 
   // Calculate the correct icon name
